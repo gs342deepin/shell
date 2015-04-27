@@ -1,0 +1,109 @@
+revision 修订，校对。priority [praɪˈɒrəti]优先。urgency:紧急，急迫。
+release释放，发行
+1. Get a copy of the upstream software,
+            package-version.tar.gz
+   Add Debian-specific packaging modifications to the upstream ...
+            package_version.orig.tar.gz
+            package_version-revision.debian.tar.gz
+	    package_version-revision.dsc
+   Build Debian binary packages,
+            package_version-revision_arch.deb
+2. 在源码目录中:  Makefile.am 在autotools工具包的autoreconf -i -f下产生Makefile.in,再由./configure 产生Makefile ,make&&make install.
+3.  RC，Release Candidate.Beta版发布于软件开发后期阶段，会根据用户需求和测试结果增加新功能，这个阶段处于RC版本发布之前。RC不会加入新的功能或模块，主要为了清除BUG。这个阶段之后就是正式版。
+4.$DEBEMAIL and $DEBFULLNAME 
+5.初始化non-native Debian packages. 
+$cd autoconf-2.9 ; dh_make -f ../autoconf-2.68.tar.gz会在上级目录产生autoconf_2.69.orig.tar.gz(即源代码tar包的copy).在源码目录下还会产生debian目录。
+6. quilt：
+  ./bashrc添加:
+   alias dquilt="quilt --quiltrc=${HOME}/.quiltrc-dpkg"
+   complete -F _quilt_completion $_quilt_complete_opt dquilt
+~/.quiltrc-dpkg：
+  d=. ; while [ ! -d $d/debian -a `readlink -e $d` != / ]; do d=$d/..; done
+if [ -d $d/debian ] && [ -z $QUILT_PATCHES ]; then
+    # if in Debian packaging tree with unset $QUILT_PATCHES
+    QUILT_PATCHES="debian/patches"
+    QUILT_PATCH_OPTS="--reject-format=unified"
+    QUILT_DIFF_ARGS="-p ab --no-timestamps --no-index --color=auto"
+    QUILT_REFRESH_ARGS="-p ab --no-timestamps --no-index"
+    QUILT_COLORS="diff_hdr=1;32:diff_add=1;34:diff_rem=1;31:diff_hunk=1;33:diff_ctx=35:diff_cctx=33"
+    if ! [ -d $d/debian/patches ]; then mkdir $d/debian/patches; fi
+fi
+--------
+$ mkdir debian/patches
+$ dquilt new fix-gentoo-target.patch
+$ dquilt add Makefile
+$ dquilt refresh
+$ dquilt header -e
+... describe patch
+
+7.control文件：section源码包进入发行版中的分类，admin,devel,doc,x11...
+priority优先级，extra/optional conflict or not with others (required,important,or standard priority).
+Depends:依赖。dh_shlibdeps calculates shared library dependencies for binary packages. 
+
+8.要找出编译你的软件所需的软件包可以使用这个命令：
+$ dpkg-depcheck -d ./configure.
+find exact build dependencies for /usr/bin/foo, execute
+$ objdump -p /usr/bin/foo | grep NEEDED
+9.changelog
+  gentoo(0.9.12-1) unstable;urgency=low
+10.override_dh_auto_configure:
+        dh_auto_configure -- --sysconfig=/etc/gentoo
+override_dh_auto_build:
+        dh_auto_build -- build
+This ensures $(MAKE) is run with all the default arguments given by the dh_auto_build command plus the build argument.
+11.debian目录下的其他文件。
+docs这个文件制定了我们使用 dh_installdocs(1) 安装到临时目录的文件名。
+默认情况下它会加入代码目录顶层的所有名为 BUGS、README*、TODO 等的文件
+{pre,post}{inst,rm}These postinst, preinst, postrm, and prerm files [59] are called maintainer scripts。
+12.在源代码目录中执行以下命令：
+$ dpkg-buildpackage
+这样会自动完成所有从源代码包构建二进制包的工作，包括：
+清理源代码树(debian/rules clean)
+构建源代码包(dpkg-source -b)
+构建程序(debian/rules build)
+构建二进制包(fakeroot debian/rules binary)
+使用 gpg 签署 .dsc 文件
+使用 dpkg-genchanges 和 gpg 创建并签署上传用的 .changes 文件
+
+debuild
+使用 dch -i 或用 dch -v version-revision 来指定版本
+
+The build target must not do anything that might require root privilege.
+The build target may need to run the clean target first - see below.
+
+dpkg-deb  dpkg-architecture
+dpkg-source -x *.dsc  产生目录，dpkg-source -b dir 产生*.dsc 和tar.gz.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               

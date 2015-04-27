@@ -1,0 +1,117 @@
+1. 创建.gitignore文件，$git status --ignored 。
+.viminfo总是更新,因为之前git commit 它，需要取消记录:$git rm .viminfo ;$git commit -m'rm .viminfo'。
+2.创建快捷键：$git config --global alias.ci "commit"。
+3.git reset --soft HEAD^: 工作区和暂存区不改变，但引用向前退一次。当对最新的提交的提交说明不满意时，撤销最新的提交以便重新提交。
+  git reset HEAD^ : 工作区不改变，但是暂存区和引用退回提交之前。
+  git reset --hard HEAD^: 彻底撤销最近的提交。
+  git reset HEAD 用master刷暂存区。
+4.$cat .git/HEAD   
+  ref:refs/heads/master ,HEAD指向分支master。
+5.$git checkout 4802^ .分离头指针状态 。即HEAD头指针指向了一个具体的提交ID，而不是一个引用分支。git show acc2f
+6.git rev-parse HEAD master,查看HEAD，master ID。
+7.git log --graph --pretty=oneline .
+8.git cat-file -p HEAD
+9.git checkout -- filename,用暂存区中文件覆盖工作区的filename。相当于取消自上次执行git add filename以来的本地修改。
+10.git checkout 汇总显示工作区，暂存区与HEAD的差异。
+11.git stash :用于保存和恢复工作进度,会对暂存区和工作区的状态进行保存。git stash pop恢复最新的工作进度。
+12.$git ls-files --with-tree=HEAD^;$git cat-file -p HEAD^:welcome.txt
+13.git add -i 交互界面。
+14.$ git config --unset --global user.name
+15.git ci --amend --reset-author --allow-empty
+16.git diff 工作区和暂存区比较， git diff HEAD工作区和HEAD分支比较，git diff --cached暂存区和版本库比较。
+17.$ git ls-tree -l HEAD  查看HEAD的目录树。第三个字段即该文件在对象库中对应的ID。	
+040000 tree 69a3e9f843e79c7569c5473adac99c8f61fdcc05       -	a
+100644 blob 474b318ef553f79b74f7dd8022aca5b244ca2ae6      25	hello.txt
+100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391       0	new-commit.txt
+18.$ git log -1 --pretty=raw 
+commit cfc0dc2aedc2bc5e1d2c5ef39ffd506f5cd63f26
+tree 16a317627095e6828b507ba085ed04e492e48af4
+parent 1b43286e5c038d09a38c6aff85789d158ff8305c
+author gs <guoshuang@linuxdeepin.com> 1429318566 +0800
+committer gs <guoshuang@linuxdeepin.com> 1429318566 +0800
+
+    xx1add does master follow this new commit?
+19.git cat-file 是研究对象ID的重量级工具。
+   $git cat-file -t cfc0 ;$ git cat-file -p 16a3
+   $ git cat-file -p 474b
+Hello,everyone!
+Bye-Bye.
+20.$ git log --pretty=raw --graph cfc0  . --pretty=raw 显示提交对象的parent属性。
+21.a57369～5  即相当于a57369^^^^^. 
+22.$ git cat-file -p HEAD^{tree} 查看HEAD对应的目录树。
+040000 tree 69a3e9f843e79c7569c5473adac99c8f61fdcc05	a
+100644 blob 474b318ef553f79b74f7dd8022aca5b244ca2ae6	hello.txt
+$ git rev-parse HEAD^^{tree}查看HEAD^的tree ID。
+23.  .git/objects (ID前两位为目录，后38为文件名，包含commit ID,tree ID,parent ID)
+24. .git/logs记录了分支的变更。默认的非裸版本库（带工作区）都提供分支日志功能，因为有
+     core.logallrefupdates true.
+     $ git reflog show master 
+cfc0dc2 master@{0}: commit (amend): xx1add does master follow this new commit?
+6467c88 master@{1}: commit (amend): xx1add does master follow this new commit?
+185b547 master@{2}: commit (amend): 1add does master follow this new commit?
+ea4ad52 master@{3}: commit (amend): add does master follow this new commit?
+fa1c7f3 master@{4}: commit: does master follow this new commit?
+1b43286 master@{5}: commit: 1
+67f130d master@{6}: commit (initial): initialized
+   
+$ git reset --hard master@{2}即可。
+25.$ git config --global alias.glog  "log --graph --oneline"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
