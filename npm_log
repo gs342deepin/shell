@@ -1,0 +1,263 @@
+echo "Installing dependencies"
+Installing dependencies
+cd PageRoot && \
+	    PATH="/home/gs/workdir/deepin-manual/symdir/:$PATH" npm --registry=https://registry.npm.taobao.org --disturl=https://npm.taobao.org/dist --production install
+npm WARN package.json DManual@0.0.1 No repository field.
+npm WARN package.json DManual@0.0.1 No README data
+gulp-rename@1.2.2 node_modules/gulp-rename
+
+angular-gettext@2.0.5 node_modules/angular-gettext
+
+expect.js@0.3.1 node_modules/expect.js
+
+marked@0.3.3 node_modules/marked
+
+angular-hotkeys@1.4.5 node_modules/angular-hotkeys
+
+angular-animate@1.3.15 node_modules/angular-animate
+
+mousetrap@1.5.2 node_modules/mousetrap
+
+jquery@2.1.3 node_modules/jquery
+
+angular@1.3.15 node_modules/angular
+
+url-parse@1.0.0 node_modules/url-parse
+├── requires-port@0.0.0
+└── querystringify@0.0.2
+
+gulp-mocha@2.0.1 node_modules/gulp-mocha
+├── through@2.3.7
+├── mocha@2.2.4 (escape-string-regexp@1.0.2, supports-color@1.2.1, diff@1.0.8, growl@1.8.1, commander@2.3.0, mkdirp@0.5.0, debug@2.0.0, jade@0.26.3, glob@3.2.3)
+└── gulp-util@3.0.4 (array-differ@1.0.0, beeper@1.0.0, object-assign@2.0.0, array-uniq@1.0.2, lodash._reescape@3.0.0, lodash._reevaluate@3.0.0, lodash._reinterpolate@3.0.0, replace-ext@0.0.1, minimist@1.1.1, vinyl@0.4.6, multipipe@0.1.2, chalk@1.0.0, lodash.template@3.5.0, through2@0.6.5, dateformat@1.0.11)
+
+gulp-uglify@1.2.0 node_modules/gulp-uglify
+├── deap@1.0.0
+├── uglify-js@2.4.19 (uglify-to-browserify@1.0.2, async@0.2.10, yargs@3.5.4, source-map@0.1.34)
+├── vinyl-sourcemaps-apply@0.1.4 (source-map@0.1.43)
+├── through2@0.6.5 (xtend@4.0.0, readable-stream@1.0.33)
+└── gulp-util@3.0.4 (array-differ@1.0.0, object-assign@2.0.0, beeper@1.0.0, array-uniq@1.0.2, lodash._reescape@3.0.0, lodash._reevaluate@3.0.0, lodash._reinterpolate@3.0.0, replace-ext@0.0.1, minimist@1.1.1, vinyl@0.4.6, chalk@1.0.0, lodash.template@3.5.0, multipipe@0.1.2, dateformat@1.0.11)
+
+gulp-ng-annotate@0.5.2 node_modules/gulp-ng-annotate
+├── merge@1.2.0
+├── bufferstreams@0.0.2 (readable-stream@1.0.33)
+├── vinyl-sourcemaps-apply@0.1.4 (source-map@0.1.43)
+├── through2@0.4.2 (xtend@2.1.2, readable-stream@1.0.33)
+├── ng-annotate@0.15.4 (tryor@0.1.2, simple-fmt@0.1.0, alter@0.2.0, simple-is@0.2.0, stringset@0.2.1, stringmap@0.2.2, stable@0.1.5, convert-source-map@0.4.1, ordered-ast-traverse@1.1.1, optimist@0.6.1, acorn@0.11.0, source-map@0.1.43)
+└── gulp-util@2.2.20 (lodash._reinterpolate@2.4.1, minimist@0.2.0, chalk@0.5.1, vinyl@0.2.3, multipipe@0.1.2, through2@0.5.1, lodash.template@2.4.1, dateformat@1.0.11)
+
+gulp-angular-gettext@2.1.0 node_modules/gulp-angular-gettext
+├── lodash.isstring@2.4.1
+├── through2@0.6.5 (xtend@4.0.0, readable-stream@1.0.33)
+├── gulp-util@3.0.4 (array-differ@1.0.0, beeper@1.0.0, array-uniq@1.0.2, object-assign@2.0.0, lodash._reevaluate@3.0.0, lodash._reescape@3.0.0, lodash._reinterpolate@3.0.0, replace-ext@0.0.1, minimist@1.1.1, vinyl@0.4.6, chalk@1.0.0, lodash.template@3.5.0, multipipe@0.1.2, dateformat@1.0.11)
+└── angular-gettext-tools@2.1.0 (binary-search@1.2.0, espree@2.0.1, lodash@2.4.1, pofile@0.2.12, cheerio@0.18.0)
+
+gulp@3.8.11 node_modules/gulp
+├── pretty-hrtime@0.2.2
+├── interpret@0.3.10
+├── deprecated@0.0.1
+├── archy@1.0.0
+├── minimist@1.1.1
+├── semver@4.3.3
+├── v8flags@2.0.5 (user-home@1.1.1)
+├── tildify@1.0.0 (user-home@1.1.1)
+├── chalk@0.5.1 (ansi-styles@1.1.0, escape-string-regexp@1.0.3, supports-color@0.2.0, strip-ansi@0.3.0, has-ansi@0.1.0)
+├── orchestrator@0.3.7 (stream-consume@0.1.0, sequencify@0.0.7, end-of-stream@0.1.5)
+├── liftoff@2.0.3 (extend@2.0.1, flagged-respawn@0.3.1, resolve@1.1.6, findup-sync@0.2.1)
+├── gulp-util@3.0.4 (array-differ@1.0.0, object-assign@2.0.0, beeper@1.0.0, array-uniq@1.0.2, lodash._reevaluate@3.0.0, lodash._reinterpolate@3.0.0, lodash._reescape@3.0.0, replace-ext@0.0.1, vinyl@0.4.6, through2@0.6.5, chalk@1.0.0, lodash.template@3.5.0, multipipe@0.1.2, dateformat@1.0.11)
+└── vinyl-fs@0.3.13 (graceful-fs@3.0.6, vinyl@0.4.6, strip-bom@1.0.0, defaults@1.0.2, mkdirp@0.5.0, through2@0.6.5, glob-stream@3.1.18, glob-watcher@0.0.6)
+
+babel-core@5.1.13 node_modules/babel-core
+├── slash@1.0.0
+├── shebang-regex@1.0.0
+├── to-fast-properties@1.0.1
+├── trim-right@1.0.0
+├── path-is-absolute@1.0.0
+├── fs-readdir-recursive@0.1.1
+├── leven@1.0.1
+├── strip-json-comments@1.0.2
+├── user-home@1.1.1
+├── private@0.1.6
+├── globals@6.4.1
+├── estraverse@3.1.0
+├── esutils@2.0.2
+├── convert-source-map@1.1.0
+├── js-tokens@1.0.0
+├── ast-types@0.7.6
+├── is-integer@1.0.4 (is-finite@1.0.0, is-nan@1.0.1)
+├── line-numbers@0.2.0 (left-pad@0.0.3)
+├── debug@2.1.3 (ms@0.7.0)
+├── output-file-sync@1.1.0 (xtend@4.0.0, mkdirp@0.5.0)
+├── detect-indent@3.0.1 (get-stdin@4.0.1, minimist@1.1.1)
+├── lodash@3.7.0
+├── chalk@1.0.0 (escape-string-regexp@1.0.3, ansi-styles@2.0.1, supports-color@1.3.1, strip-ansi@2.0.1, has-ansi@1.0.3)
+├── source-map@0.4.2 (amdefine@0.1.0)
+├── source-map-support@0.2.10 (source-map@0.1.32)
+├── minimatch@2.0.4 (brace-expansion@1.1.0)
+├── core-js@0.9.4
+├── repeating@1.1.2 (is-finite@1.0.0, meow@3.1.0)
+├── regexpu@1.1.2 (regjsgen@0.2.0, regenerate@1.2.1, regjsparser@0.1.4, recast@0.10.12)
+└── regenerator@0.8.22 (through@2.3.7, esprima-fb@13001.1.0-dev-harmony-fb, defs@1.1.0, recast@0.10.12, commoner@0.10.1)
+
+babelify@5.0.5 node_modules/babelify
+├── through@2.3.4
+├── lodash@3.7.0
+└── babel-core@4.7.16 (slash@1.0.0, shebang-regex@1.0.0, to-fast-properties@1.0.1, trim-right@1.0.0, path-is-absolute@1.0.0, fs-readdir-recursive@0.1.1, leven@1.0.1, private@0.1.6, globals@6.4.1, esutils@1.1.6, estraverse@1.9.3, convert-source-map@0.5.1, js-tokens@1.0.0, line-numbers@0.2.0, is-integer@1.0.4, ast-types@0.7.6, debug@2.1.3, acorn-babel@0.11.1-38, detect-indent@3.0.1, commander@2.8.1, core-js@0.6.1, output-file-sync@1.1.0, chalk@1.0.0, source-map-support@0.2.10, source-map@0.4.2, repeating@1.1.2, regexpu@1.1.2, regenerator-babel@0.8.13-2)
+
+browserify@9.0.8 node_modules/browserify
+├── https-browserify@0.0.0
+├── tty-browserify@0.0.0
+├── builtins@0.0.7
+├── constants-browserify@0.0.1
+├── process@0.10.1
+├── path-browserify@0.0.0
+├── os-browserify@0.1.2
+├── isarray@0.0.1
+├── inherits@2.0.1
+├── commondir@0.0.1
+├── string_decoder@0.10.31
+├── stream-browserify@1.0.0
+├── defined@0.0.0
+├── has@1.0.0
+├── shell-quote@0.0.1
+├── domain-browser@1.1.4
+├── shallow-copy@0.0.1
+├── xtend@3.0.0
+├── duplexer2@0.0.2
+├── deep-equal@1.0.0
+├── querystring-es3@0.2.1
+├── assert@1.3.0
+├── timers-browserify@1.4.0
+├── punycode@1.2.4
+├── util@0.10.3
+├── events@1.0.2
+├── subarg@1.0.0 (minimist@1.1.1)
+├── vm-browserify@0.0.4 (indexof@0.0.1)
+├── parents@1.0.1 (path-platform@0.11.15)
+├── read-only-stream@1.1.1 (readable-wrap@1.0.0)
+├── console-browserify@1.1.0 (date-now@0.1.4)
+├── concat-stream@1.4.8 (typedarray@0.0.6)
+├── browser-resolve@1.8.2
+├── resolve@1.1.6
+├── http-browserify@1.7.0 (Base64@0.2.1)
+├── url@0.10.3 (punycode@1.3.2, querystring@0.2.0)
+├── readable-stream@1.1.13 (core-util-is@1.0.1)
+├── labeled-stream-splicer@1.0.2 (stream-splicer@1.3.1)
+├── through2@1.1.1 (xtend@4.0.0)
+├── syntax-error@1.1.3 (acorn@1.0.3)
+├── deps-sort@1.3.6 (through2@0.5.1)
+├── shasum@1.0.1 (sha.js@2.3.6, json-stable-stringify@0.0.1)
+├── buffer@3.2.1 (ieee754@1.1.4, is-array@1.0.1, base64-js@0.0.8)
+├── browserify-zlib@0.1.4 (pako@0.2.6)
+├── JSONStream@0.10.0 (through@2.3.7, jsonparse@0.0.5)
+├── glob@4.5.3 (once@1.3.1, inflight@1.0.4, minimatch@2.0.4)
+├── insert-module-globals@6.4.0 (process@0.11.0, through@2.3.7, xtend@4.0.0, combine-source-map@0.3.0, lexical-scope@1.1.1)
+├── browser-pack@4.0.2 (umd@3.0.1, defined@1.0.0, through2@0.5.1, combine-source-map@0.3.0)
+├── crypto-browserify@3.9.14 (randombytes@2.0.1, create-hmac@1.1.3, pbkdf2@3.0.4, browserify-aes@1.0.0, create-hash@1.1.1, diffie-hellman@3.0.1, create-ecdh@2.0.0, public-encrypt@2.0.0, browserify-sign@3.0.1)
+└── module-deps@3.7.8 (defined@1.0.0, xtend@4.0.0, through2@0.4.2, stream-combiner2@1.0.2, detective@4.0.1)
+mkdir -p PageRoot/www/style
+sass --style compressed --unix-newlines PageRoot/www/scss/index.scss PageRoot/www/style/index.css
+sass --style compressed --unix-newlines PageRoot/www/scss/content.scss PageRoot/www/style/content.css
+sass --style compressed --unix-newlines PageRoot/www/scss/reset.scss PageRoot/www/style/reset.css
+echo "Transpiling"
+Transpiling
+mkdir -p PageRoot/www/scripts
+cd PageRoot && \
+	    PATH="/home/gs/workdir/deepin-manual/symdir/:$PATH" node --harmony ./node_modules/gulp/bin/gulp.js dist
+[21:45:58] Using gulpfile ~/workdir/deepin-manual/PageRoot/Gulpfile.js
+[21:45:58] Starting 'copyMouseTrap'...
+[21:45:58] Starting 'browserify'...
+[21:45:58] Finished 'browserify' after 20 ms
+[21:45:58] Starting 'translations'...
+[21:45:58] Finished 'copyMouseTrap' after 61 ms
+[21:45:58] Finished 'translations' after 105 ms
+[21:45:58] Starting 'dist'...
+[21:45:58] Finished 'dist' after 407 μs
+Minifying bundle.js
+Gulp::dist done.
+# Remove unminified bundle.js
+rm PageRoot/www/scripts/bundle.js
+echo "Copying icon"
+Copying icon
+cp DMan/DManual.svg PageRoot/www/favicon.svg
+make[1]:正在离开目录 `/home/gs/workdir/deepin-manual'
+   dh_auto_test
+ fakeroot debian/rules binary
+dh binary
+   dh_testroot
+   dh_prep
+	rm -f debian/deepin-manual.substvars
+	rm -f debian/deepin-manual.*.debhelper
+	rm -rf debian/deepin-manual/
+   dh_auto_install
+	install -d debian/deepin-manual
+	make -j1 install DESTDIR=/home/gs/workdir/deepin-manual/debian/deepin-manual AM_UPDATE_INFO_DIR=no
+make[1]: 正在进入目录 `/home/gs/workdir/deepin-manual'
+mkdir -p /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/deepin-manual/{PageRoot,DMan}
+cp -r PageRoot/{www,plugins,manifest.json} /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/deepin-manual/PageRoot/
+cp -r DMan/* /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/deepin-manual/DMan/
+rm -r /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/deepin-manual/PageRoot/www/{jssrc,scss}
+find /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/deepin-manual -name "__pycache__" -print0 | xargs -0 rm -rf
+# remove unused files for dae
+rm -rf /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/deepin-manual/DMan/qml
+rm -rf /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/deepin-manual/DMan/tests
+rm -rf /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/deepin-manual/DMan/{main.py,main2.py,QmlResizable.py,view.py,webview.py}
+mv /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/deepin-manual/DMan/main_dae.py /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/deepin-manual/DMan/main.py
+chmod +x /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/deepin-manual/DMan/main.py
+# Atom-shell script
+# cp {main.js,package.json} /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/deepin-manual/
+# chmod +x /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/deepin-manual/main.js
+# install dman in /usr/bin
+install -d /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/bin
+ln -s /usr/share/deepin-manual/DMan/main.py /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/bin/dman
+python3 -OO -m compileall -q /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/deepin-manual/DMan
+# copy dman for dman
+mkdir -p /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/dman
+cp -r manual /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/dman/dman
+# Copy icons
+mkdir -p /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/icons/hicolor/scalable/apps
+cp DMan/DManual.svg /home/gs/workdir/deepin-manual/debian/deepin-manual/usr/share/icons/hicolor/scalable/apps/deepin-manual.svg
+make[1]:正在离开目录 `/home/gs/workdir/deepin-manual'
+   dh_install
+   dh_installdocs
+	install -g 0 -o 0 -d debian/deepin-manual/usr/share/doc/deepin-manual
+   dh_installchangelogs
+	install -o 0 -g 0 -p -m644 debian/changelog debian/deepin-manual/usr/share/doc/deepin-manual/changelog
+   dh_icons
+   dh_perl
+   dh_link
+	rm -f debian/deepin-manual/usr/bin/dman
+	ln -sf ../share/deepin-manual/DMan/main.py debian/deepin-manual/usr/bin/dman
+   dh_compress
+	cd debian/deepin-manual
+	chmod a-x usr/share/doc/deepin-manual/changelog
+	gzip -9nf usr/share/doc/deepin-manual/changelog
+	cd '/home/gs/workdir/deepin-manual'
+   dh_fixperms
+	find debian/deepin-manual  -print0 2>/dev/null | xargs -0r chown --no-dereference 0:0
+	find debian/deepin-manual ! -type l  -print0 2>/dev/null | xargs -0r chmod go=rX,u+rw,a-s
+	find debian/deepin-manual/usr/share/doc -type f  ! -regex 'debian/deepin-manual/usr/share/doc/[^/]*/examples/.*' -print0 2>/dev/null | xargs -0r chmod 644
+	find debian/deepin-manual/usr/share/doc -type d  -print0 2>/dev/null | xargs -0r chmod 755
+	find debian/deepin-manual/usr/share/man debian/deepin-manual/usr/man/ debian/deepin-manual/usr/X11*/man/ -type f  -print0 2>/dev/null | xargs -0r chmod 644
+	find debian/deepin-manual -perm -5 -type f \( -name '*.so.*' -or -name '*.so' -or -name '*.la' -or -name '*.a' \)  -print0 2>/dev/null | xargs -0r chmod 644
+	find debian/deepin-manual/usr/include -type f  -print0 2>/dev/null | xargs -0r chmod 644
+	find debian/deepin-manual/usr/share/applications -type f  -print0 2>/dev/null | xargs -0r chmod 644
+	find debian/deepin-manual -perm -5 -type f \( -name '*.cmxs' \)  -print0 2>/dev/null | xargs -0r chmod 644
+	find debian/deepin-manual/usr/lib/perl5 debian/deepin-manual/usr/share/perl5 -type f -perm -5 -name '*.pm'  -print0 2>/dev/null | xargs -0r chmod a-X
+	find debian/deepin-manual/usr/bin -type f  -print0 2>/dev/null | xargs -0r chmod a+x
+	find debian/deepin-manual/usr/lib -type f -name '*.ali'  -print0 2>/dev/null | xargs -0r chmod uga-w
+   dh_installdeb
+	install -o 0 -g 0 -d debian/deepin-manual/DEBIAN
+   dh_gencontrol
+	echo misc:Depends= >> debian/deepin-manual.substvars
+	dpkg-gencontrol -ldebian/changelog -Tdebian/deepin-manual.substvars -Pdebian/deepin-manual
+	chmod 644 debian/deepin-manual/DEBIAN/control
+	chown 0:0 debian/deepin-manual/DEBIAN/control
+   dh_md5sums
+	(cd debian/deepin-manual >/dev/null ; find . -type f  ! -regex './DEBIAN/.*' -printf '%P\0' | LC_ALL=C sort -z | xargs -r0 md5sum > DEBIAN/md5sums) >/dev/null
+	chmod 644 debian/deepin-manual/DEBIAN/md5sums
+	chown 0:0 debian/deepin-manual/DEBIAN/md5sums
+   dh_builddeb
+	dpkg-deb --build debian/deepin-manual ..
+dpkg-deb：正在新建软件包 deepin-manual，包文件为 ../deepin-manual_0.1_all.deb。
+
