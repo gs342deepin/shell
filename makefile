@@ -45,8 +45,16 @@ GNU的make工作时的执行步骤入下：（想来其它的make也是类似）
    strip 函数： second := $(strip $(first))  把$(first)的空格删除。
    wildcard 函数：用于得到当前工作目录中满足 pattern 模式的文件或目录名列表 srcFile = $(wildcard *.c)。
 
-
-
+11.  可以为某个目标设置局部变量，这种变量被称为“Target-specific Variable”，它可以和“全局变量”同名，因为它的作用范围只在这条规则以及连带规则中，所以其值也只在作用范围内有效。
+     其语法是：
+    <target ...> : <variable-assignment>
+    <target ...> : overide <variable-assignment>
+    eg:
+     prog : CFLAGS = -g
+     prog : prog.o foo.o bar.o
+            $(CC) $(CFLAGS) prog.o foo.o bar.o
+     在这个示例中，不管全局的$(CFLAGS)的值是什么，在prog目标，以及其所引发的所有规则中（prog.o foo.o bar.o的规则），$(CFLAGS)的值都是“-g”.
+12.
 
 
 
