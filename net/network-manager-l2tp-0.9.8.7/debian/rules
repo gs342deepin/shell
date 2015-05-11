@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
+%:
+	#dh $@ --with autoreconf
+	dh $@
+
+override_dh_auto_configure:
+	./autogen.sh
+	dh_auto_configure -- \
+		--prefix=/usr --sysconfdir=/etc \
+		--libexecdir=/usr/lib/NetworkManager \
+		--disable-static --enable-more-warnings=yes \
+		--with-pppd-plugin-dir=/usr/lib/pppd/2.4.6
+
+override_dh_makeshlibs:
+	dh_makeshlibs -X/usr/lib/NetworkManager/ -X/usr/lib/pppd/
+
+override_dh_install:
+	dh_install --list-missing

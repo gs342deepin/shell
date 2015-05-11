@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		--libexecdir=/usr/lib/NetworkManager \
+		--disable-static \
+		--with-pppd-plugin-dir=/usr/lib/pppd/2.4.5 \
+		--with-gtkver=3 \
+		--with-dist-version=0.9.8-0quantal1
+
+override_dh_makeshlibs:
+	dh_makeshlibs -X/usr/lib/NetworkManager/ -X/usr/lib/pppd/
