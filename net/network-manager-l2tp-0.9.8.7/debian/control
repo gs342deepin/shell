@@ -10,7 +10,7 @@ Build-Depends:
  libnm-util-dev (>= 0.9.8),
  libnm-glib-dev (>= 0.9.8),
  libnm-glib-vpn-dev (>= 0.9.8),
- ppp-dev (>= 2.4.5),
+ ppp-dev (>= 2.4.6),
  intltool,
  libdbus-glib-1-dev (>= 0.74),
  libgnome-keyring-dev,
@@ -23,7 +23,7 @@ Homepage: https://github.com/seriyps/NetworkManager-l2tp
 
 Package: network-manager-l2tp
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ppp (>= 2.4.5), ppp (<< 2.4.6), xl2tpd, openswan
+Depends: ${shlibs:Depends}, ${misc:Depends}, ppp (>= 2.4.6), xl2tpd, openswan
 Recommends: network-manager-l2tp-gnome | plasma-widget-networkmanagement
 Description: network management framework (L2TP plugin core)
  NetworkManager is a system network service that manages your network devices

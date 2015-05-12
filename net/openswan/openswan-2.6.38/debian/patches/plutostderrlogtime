@@ -1,0 +1,307 @@
+Description: Add plutostderrlogtime to options
+Author: Paul Wouters <paul@nohats.ca>
+Origin: upstream git
+Last-Update: 2012-06-27
+
+Index: openswan-debian/include/ipsecconf/keywords.h
+===================================================================
+--- openswan-debian.orig/include/ipsecconf/keywords.h	2012-06-29 19:15:40.605617489 +0200
++++ openswan-debian/include/ipsecconf/keywords.h	2012-06-29 19:16:39.229617823 +0200
+@@ -67,6 +67,7 @@
+     KBF_HIDETOS,
+     KBF_UNIQUEIDS,
+     KBF_PLUTOWAIT,
++    KBF_PLUTOSTDERRLOGTIME,
+     KBF_OVERRIDEMTU,
+     KBF_CONNMTU,
+     KBF_STRICTCRLPOLICY,
+Index: openswan-debian/lib/libipsecconf/confread.c
+===================================================================
+--- openswan-debian.orig/lib/libipsecconf/confread.c	2012-06-29 19:15:40.605617489 +0200
++++ openswan-debian/lib/libipsecconf/confread.c	2012-06-29 19:16:39.229617823 +0200
+@@ -65,6 +65,7 @@
+ 	cfg->setup.options[KBF_FRAGICMP] = TRUE;
+ 	cfg->setup.options[KBF_HIDETOS]  = TRUE;
+ 	cfg->setup.options[KBF_PLUTORESTARTONCRASH]  = TRUE;
++	cfg->setup.options[KBF_PLUTOSTDERRLOGTIME]  = FALSE;
+ 	cfg->setup.options[KBF_UNIQUEIDS]= TRUE;
+ #ifdef NAT_TRAVERSAL
+ 	cfg->setup.options[KBF_DISABLEPORTFLOATING]= FALSE;
+Index: openswan-debian/lib/libipsecconf/keywords.c
+===================================================================
+--- openswan-debian.orig/lib/libipsecconf/keywords.c	2012-06-29 19:15:40.605617489 +0200
++++ openswan-debian/lib/libipsecconf/keywords.c	2012-06-29 19:16:39.229617823 +0200
+@@ -339,6 +339,7 @@
+ #endif
+     {"plutoopts",      kv_config, kt_string,    KSF_PLUTOOPTS,NOT_ENUM},
+     {"plutostderrlog", kv_config, kt_filename,  KSF_PLUTOSTDERRLOG,NOT_ENUM},
++    {"plutostderrlogtime",        kv_config, kt_bool,      KBF_PLUTOSTDERRLOGTIME,NOT_ENUM},
+     {"plutorestartoncrash", kv_config, kt_bool, KBF_PLUTORESTARTONCRASH,NOT_ENUM},
+     {"dumpdir",        kv_config, kt_dirname,   KSF_DUMPDIR,NOT_ENUM},
+     {"manualstart",    kv_config, kt_string,    KSF_MANUALSTART,NOT_ENUM},
+Index: openswan-debian/programs/_confread/d.ipsec.conf/order.txt
+===================================================================
+--- openswan-debian.orig/programs/_confread/d.ipsec.conf/order.txt	2012-06-29 19:15:40.605617489 +0200
++++ openswan-debian/programs/_confread/d.ipsec.conf/order.txt	2012-06-29 19:16:39.229617823 +0200
+@@ -84,6 +84,7 @@
+ d.ipsec.conf/plutorestartoncrash.xml
+ d.ipsec.conf/plutoopts.xml
+ d.ipsec.conf/plutostderrlog.xml
++d.ipsec.conf/plutostderrlogtime.xml
+ d.ipsec.conf/pluto.xml
+ d.ipsec.conf/plutowait.xml
+ d.ipsec.conf/prepluto.xml
+Index: openswan-debian/programs/_confread/d.ipsec.conf/plutostderrlogtime.xml
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ openswan-debian/programs/_confread/d.ipsec.conf/plutostderrlogtime.xml	2012-06-29 19:16:39.229617823 +0200
+@@ -0,0 +1,15 @@
++  <varlistentry>
++  <term><emphasis remap='B'>plutostderrlogtime</emphasis></term>
++  <listitem>
++<para>Whether pluto logs messages with the current timestamp as prefix. This
++might be desired when using <emphasis remap='B'>plutostderrlog=</emphasis>,
++which per default does not log timestamps, as the output is used for
++the test suite and would have to be filtered out.
++Values are
++<emphasis remap='B'>no</emphasis>(the default)
++or
++<emphasis remap='B'>yes</emphasis>
++.</para>
++
++  </listitem>
++  </varlistentry>
+Index: openswan-debian/programs/_plutorun/_plutorun.in
+===================================================================
+--- openswan-debian.orig/programs/_plutorun/_plutorun.in	2012-06-29 19:15:40.605617489 +0200
++++ openswan-debian/programs/_plutorun/_plutorun.in	2012-06-29 19:16:39.229617823 +0200
+@@ -19,6 +19,7 @@
+ 
+ popts=
+ stderrlog=
++plutostderrlogtime=
+ showonly=
+ plutorestartoncrash=true
+ 
+@@ -47,6 +48,7 @@
+ 	--dump)	                 dumpdir="$2" ; shift	;;
+ 	--opts)	                 popts="$2" ; shift	;;
+ 	--stderrlog)             stderrlog="$2" ; shift	;;
++	--plutostderrlogtime)               plutostderrlogtime="$2" ; shift	;;
+ 	--wait)	                 plutowait="$2" ; shift	;;
+         --show)	                 show="--show"  ; shift ;;
+ 	--showonly)	         showonly="true" ;;
+@@ -124,6 +126,11 @@
+ no|'')                ;;
+ *)    echo "unknown disable_port_floating (not yes/no) \`$disable_port_floating'" ;;
+ esac
++case "$plutostderrlogtime" in
++yes)  popts="$popts --plutostderrlogtime"  ;;
++no|'')                ;;
++*)    echo "unknown plutostderrlogtime (not yes/no) \`$plutostderrlogtime'" ;;
++esac
+ [ -n "$virtual_private" ] && popts="$popts --virtual_private $virtual_private"
+ [ -n "$listen" ] && popts="$popts --listen $listen"
+ 
+Index: openswan-debian/programs/_realsetup.bsd/_realsetup.in
+===================================================================
+--- openswan-debian.orig/programs/_realsetup.bsd/_realsetup.in	2012-06-29 19:15:40.605617489 +0200
++++ openswan-debian/programs/_realsetup.bsd/_realsetup.in	2012-06-29 19:16:39.229617823 +0200
+@@ -241,6 +241,7 @@
+ 			--dump "\"$IPSECdumpdir\"" \
+ 			--opts "\"$IPSECplutoopts\"" \
+ 			--stderrlog "\"$IPSECplutostderrlog\"" \
++			--plutostderrlogtime "\"$IPSECplutostderrlogtime\"" \
+ 			--wait "\"$IPSECplutowait\"" \
+ 			--pre "\"$IPSECprepluto\"" \
+ 			--post "\"$IPSECpostpluto\"" \
+Index: openswan-debian/programs/_realsetup/_realsetup.in
+===================================================================
+--- openswan-debian.orig/programs/_realsetup/_realsetup.in	2012-06-29 19:15:40.605617489 +0200
++++ openswan-debian/programs/_realsetup/_realsetup.in	2012-06-29 19:16:39.229617823 +0200
+@@ -72,6 +72,7 @@
+ IPSECdisable_port_floating=${IPSECdisable_port_floating:-no}
+ IPSECcrlcheckinterval=${IPSECcrlcheckinterval:-0}
+ IPSECprotostack=${IPSECprotostack:-auto}
++IPSECplutostderrlogtime=${IPSECplutostderrlogtime:-no}
+ # IPSECoverridemtu	""
+ 
+ # set defaults
+@@ -330,6 +331,7 @@
+ 			--opts "\"$IPSECplutoopts\"" \
+ 			--stderrlog "\"$IPSECplutostderrlog\"" \
+ 			--wait "\"$IPSECplutowait\"" \
++			--plutostderrlogtime "\"$IPSECplutostderrlogtime\"" \
+ 			--pre "\"$IPSECprepluto\"" \
+ 			--post "\"$IPSECpostpluto\"" \
+ 			--log "\"$IPSECsyslog\"" $plutorestartoncrash \
+Index: openswan-debian/programs/pluto/log.c
+===================================================================
+--- openswan-debian.orig/programs/pluto/log.c	2012-06-29 19:15:40.605617489 +0200
++++ openswan-debian/programs/pluto/log.c	2012-06-29 19:16:39.229617823 +0200
+@@ -3,7 +3,7 @@
+  * Copyright (C) 1998-2001  D. Hugh Redelmeier.
+  * Copyright (C) 2005-2007 Michael Richardson
+  * Copyright (C) 2006-2010 Bart Trojanowski
+- * Copyright (C) 2008-2010 Paul Wouters
++ * Copyright (C) 2008-2012 Paul Wouters
+  * Copyright (C) 2008-2010 David McCullough.
+  *
+  * This program is free software; you can redistribute it and/or modify it
+@@ -71,7 +71,9 @@
+     log_to_stderr = TRUE,	/* should log go to stderr? */
+     log_to_syslog = TRUE,	/* should log go to syslog? */
+     log_to_perpeer= FALSE,	/* should log go to per-IP file? */
+-    log_did_something=TRUE;     /* set if we wrote something recently */
++    log_did_something=TRUE,     /* set if we wrote something recently */
++    log_with_timestamp= FALSE; /* some people want timestamps, but we
++				   don't want those in our test output */
+ 
+ 
+ bool
+@@ -421,8 +423,19 @@
+ 
+     log_did_something=TRUE;
+ 
+-    if (log_to_stderr)
+-	fprintf(stderr, "%s\n", m);
++    if (log_to_stderr) {
++	if (log_with_timestamp) {
++		struct tm *timeinfo;
++		char fmt[32];
++		time_t rtime;
++		time(&rtime);
++		timeinfo = localtime (&rtime);
++		strftime (fmt,sizeof(fmt),"%b %e %T",timeinfo);
++		fprintf(stderr, "%s: %s\n", fmt, m);
++	} else {
++		fprintf(stderr, "%s\n", m);
++	}
++    }
+     if (log_to_syslog)
+ 	syslog(LOG_WARNING, "%s", m);
+     if (log_to_perpeer)
+@@ -445,8 +458,19 @@
+ 
+     log_did_something=TRUE;
+ 
+-    if (log_to_stderr)
+-	fprintf(stderr, "%s\n", m);
++    if (log_to_stderr) {
++	if (log_with_timestamp) {
++		struct tm *timeinfo;
++		char fmt[32];
++		time_t rtime;
++		time(&rtime);
++		timeinfo = localtime (&rtime);
++		strftime (fmt,sizeof(fmt),"%b %e %T",timeinfo);
++		fprintf(stderr, "%s: %s\n", fmt, m);
++	} else {
++		fprintf(stderr, "%s\n", m);
++	}
++    }
+     if (log_to_syslog)
+ 	syslog(LOG_WARNING, "%s", m);
+     if (log_to_perpeer)
+@@ -701,8 +725,19 @@
+     /* then sanitize anything else that is left. */
+     (void)sanitize_string(m, sizeof(m));
+ 
+-    if (log_to_stderr)
+-	fprintf(stderr, "%c %s\n", debug_prefix, m);
++    if (log_to_stderr) {
++	if (log_with_timestamp) {
++		struct tm *timeinfo;
++		char fmt[32];
++		time_t rtime;
++		time(&rtime);
++		timeinfo = localtime (&rtime);
++		strftime (fmt,sizeof(fmt),"%b %e %T",timeinfo);
++		fprintf(stderr, "%c %s: %s\n", debug_prefix, fmt, m);
++	} else {
++		fprintf(stderr, "%c %s\n", debug_prefix, m);
++	}
++    }
+     if (log_to_syslog)
+ 	syslog(LOG_DEBUG, "%c %s", debug_prefix, m);
+     if (log_to_perpeer) {
+Index: openswan-debian/programs/pluto/log.h
+===================================================================
+--- openswan-debian.orig/programs/pluto/log.h	2012-06-29 19:15:40.605617489 +0200
++++ openswan-debian/programs/pluto/log.h	2012-06-29 19:16:39.229617823 +0200
+@@ -27,7 +27,8 @@
+ extern bool
+     log_to_stderr,	/* should log go to stderr? */
+     log_to_syslog,	/* should log go to syslog? */
+-    log_to_perpeer;     /* should log go to per-IP file? */
++    log_to_perpeer,     /* should log go to per-IP file? */
++    log_with_timestamp; /* prefix timestamp */
+ 
+ extern bool log_did_something;  /* set if we should log time again to debug*/
+ 
+Index: openswan-debian/programs/pluto/plutomain.c
+===================================================================
+--- openswan-debian.orig/programs/pluto/plutomain.c	2012-06-29 19:15:40.605617489 +0200
++++ openswan-debian/programs/pluto/plutomain.c	2012-06-29 19:16:39.229617823 +0200
+@@ -140,6 +140,7 @@
+ 	    " \\\n\t"
+ 	    "[--nofork]"
+ 	    " [--stderrlog]"
++	    " [--plutostderrlogtime]"
+ 	    " [--force_busy]"
+ 	    " [--nocrsend]"
+ 	    " [--strictcrlpolicy]"
+@@ -306,6 +307,7 @@
+ char **global_argv;
+ int    global_argc;
+ bool   log_to_stderr_desired = FALSE;
++bool   log_with_timestamp_desired = FALSE;
+ 
+ #ifdef HAVE_LABELED_IPSEC
+ u_int16_t secctx_attr_value=SECCTX;
+@@ -374,6 +376,7 @@
+ 	    { "optionsfrom", required_argument, NULL, '+' },
+ 	    { "nofork", no_argument, NULL, 'd' },
+ 	    { "stderrlog", no_argument, NULL, 'e' },
++	    { "plutostderrlogtime", no_argument, NULL, 't' },
+ 	    { "noklips", no_argument, NULL, 'n' },
+ 	    { "use-nostack",  no_argument, NULL, 'n' },
+ 	    { "use-none",     no_argument, NULL, 'n' },
+@@ -544,6 +547,10 @@
+ 	    log_to_stderr_desired = TRUE;
+ 	    continue;
+ 
++	case 't':	/* --plutostderrlogtime */
++	    log_with_timestamp_desired = TRUE;
++	    continue;
++
+ 	case 'G':       /* --use-auto */
+ 	    kern_interface = AUTO_PICK;
+ 	    continue;
+@@ -749,9 +756,12 @@
+ 
+     /* select between logging methods */
+ 
+-    if (log_to_stderr_desired)
++    if (log_to_stderr_desired) {
+ 	log_to_syslog = FALSE;
+-    else
++	if (log_with_timestamp_desired)
++	   log_with_timestamp = TRUE;
++    }
++    else 
+ 	log_to_stderr = FALSE;
+ 
+ #ifdef DEBUG
+Index: openswan-debian/programs/pluto/server.h
+===================================================================
+--- openswan-debian.orig/programs/pluto/server.h	2012-06-29 19:15:40.605617489 +0200
++++ openswan-debian/programs/pluto/server.h	2012-06-29 19:16:39.229617823 +0200
+@@ -19,6 +19,7 @@
+ 
+ extern bool no_retransmits;
+ extern bool log_to_stderr_desired;
++extern bool log_with_timestamp_desired;
+ 
+ extern int ctl_fd;	/* file descriptor of control (whack) socket */
+ extern struct sockaddr_un ctl_addr;	/* address of control (whack) socket */

@@ -1,0 +1,143 @@
+Description: Fix problems with Cisco peers
+Author: Paul Wouters <paul@nohats.ca>
+Origin: upstream git
+Last-Update: 2012-06-21
+
+Index: openswan-debian/programs/pluto/connections.c
+===================================================================
+--- openswan-debian.orig/programs/pluto/connections.c	2012-06-29 19:15:41.205617489 +0200
++++ openswan-debian/programs/pluto/connections.c	2012-06-29 19:16:32.205617479 +0200
+@@ -222,7 +222,7 @@
+     pfreeany(e->host_addr_name);
+ }
+ 
+-static void
++void
+ delete_sr(struct connection *c, struct spd_route *sr)
+ {
+     delete_end(c, sr, &sr->this);
+Index: openswan-debian/programs/pluto/connections.h
+===================================================================
+--- openswan-debian.orig/programs/pluto/connections.h	2012-06-29 19:15:41.205617489 +0200
++++ openswan-debian/programs/pluto/connections.h	2012-06-29 19:16:32.205617479 +0200
+@@ -321,6 +321,7 @@
+ extern void delete_connection(struct connection *c, bool relations);
+ extern void delete_connections_by_name(const char *name, bool strict);
+ extern void delete_every_connection(void);
++extern void delete_sr(struct connection *c, struct spd_route *sr);
+ extern char *add_group_instance(struct connection *group, const ip_subnet *target);
+ extern void remove_group_instance(const struct connection *group, const char *name);
+ extern void release_dead_interfaces(void);
+Index: openswan-debian/programs/pluto/xauth.c
+===================================================================
+--- openswan-debian.orig/programs/pluto/xauth.c	2012-06-29 19:15:41.205617489 +0200
++++ openswan-debian/programs/pluto/xauth.c	2012-06-29 19:16:32.205617479 +0200
+@@ -1785,7 +1785,9 @@
+ 				 , caddr);
+ 		    
+ 		    if(addrbytesptr(&c->spd.this.host_srcip, NULL) == 0
+-		       || isanyaddr(&c->spd.this.host_srcip)) {
++		       || isanyaddr(&c->spd.this.host_srcip)
++			|| c->remotepeertype == CISCO ) { 
++			/*with remotepeertype == CISCO, overwrite the previous address with the new received address*/
+ 			openswan_log("setting ip source address to %s"
+ 				     , caddr);
+ 			c->spd.this.host_srcip = a;
+@@ -1835,7 +1837,11 @@
+ 			{
+ 			    /* concatenate new IP address string on end of
+ 			     * existing string, separated by ' '.
++			     * concatenate only if the received DNS is not
++			     * already present in the current string.
+ 			     */
++ 
++			    if( !strstr(c->cisco_dns_info, caddr) ) {
+ 			    size_t sz_old = strlen(old);
+ 			    size_t sz_added = strlen(caddr) + 1;
+ 			    char *new = alloc_bytes(sz_old + 1 + sz_added, "cisco_dns_info+");
+@@ -1847,6 +1853,7 @@
+ 			    pfree(old);
+ 			}
+ 		    }
++		    }
+ 
+                     DBG_log("Cisco DNS info: %s, len=%zd", st->st_connection->cisco_dns_info, strlen(st->st_connection->cisco_dns_info));
+                 }
+@@ -1860,18 +1867,22 @@
+ 		    break;
+ 
+ 		case CISCO_BANNER:
++		    /*if received again, free the previous and create the new one*/
++		    pfreeany(st->st_connection->cisco_banner);
+ 		    st->st_connection->cisco_banner = cisco_stringify(&strattr,"Cisco Banner");
+                     resp |= LELEM(attr.isaat_af_type);
+                     break;
+ 
+ 		case CISCO_DEF_DOMAIN:
++		    /*if received again, free the previous one and create the new one*/
++		    pfreeany(st->st_connection->cisco_domain_info);
+ 		    st->st_connection->cisco_domain_info = cisco_stringify(&strattr,"Cisco Domain");
+                     resp |= LELEM(attr.isaat_af_type);
+                     break;
+ 
+ 		case CISCO_SPLIT_INC:
+                 {
+-                    struct spd_route *tmp_spd;
++                    struct spd_route *tmp_spd, *tmp_spd1;
+                     ip_address a;
+                     char caddr[SUBNETTOT_BUF];
+                     size_t len = pbs_left(&strattr);
+@@ -1884,6 +1895,18 @@
+                     tmp_spd2->that.has_client_wildcard = FALSE;
+                     }
+ 
++					/* receiving remote subnets information again
++					* free the previous ones before proceeding. 
++					*/
++					tmp_spd = tmp_spd2->next;
++					tmp_spd2->next = NULL;
++					while(tmp_spd ) {
++					delete_sr(c, tmp_spd);
++					tmp_spd1 = tmp_spd->next;
++					pfree(tmp_spd);
++					tmp_spd = tmp_spd1;	    	
++                    }
++
+                     while (len > 0) {
+                     u_int32_t *ap;
+                     tmp_spd = clone_thing(c->spd, "remote subnets policies");
+Index: openswan-debian/programs/_updown.netkey/_updown.netkey.in
+===================================================================
+--- openswan-debian.orig/programs/_updown.netkey/_updown.netkey.in	2012-06-29 19:15:41.205617489 +0200
++++ openswan-debian/programs/_updown.netkey/_updown.netkey.in	2012-06-29 19:16:32.205617479 +0200
+@@ -188,6 +188,14 @@
+     ip route flush cache
+ }
+ 
++downrule() {
++        if [ -n "$PLUTO_MY_SOURCEIP" ]
++        then
++            doroute del
++            ip route flush cache
++        fi
++}
++
+ updateresolvconf() {
+     if [ -n "$PLUTO_CISCO_DNS_INFO" ]; then
+ 	if [ -n "`pidof unbound`" -a -n "$PLUTO_CISCO_DOMAIN_INFO"  ]; then
+@@ -457,6 +465,7 @@
+ 	;;
+     down-host)
+ 	# connection to me going down
++	downrule
+ 	# If you are doing a custom version, firewall commands go here.
+ 	;;
+     up-client)
+@@ -465,6 +474,7 @@
+ 	;;
+     down-client)
+ 	# connection to my client subnet going down
++	downrule
+ 	# If you are doing a custom version, firewall commands go here.
+ 	;;
+     updateresolvconf-host|updateresolvconf-client)
