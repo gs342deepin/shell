@@ -1,0 +1,127 @@
+ dpkg-buildpackage -rfakeroot -D -us -uc
+dpkg-buildpackage: 源码包 deepin-desktop-environment
+dpkg-buildpackage: 源码版本 2.1+20150413170547~9fbb0869bf
+dpkg-buildpackage: source distribution trusty
+dpkg-buildpackage: 源码修改者 Yueqian Zhang <zhangyueqian@linuxdeepin.com>
+ dpkg-source --before-build deepin-desktop-environment-2.1+20150413170547~9fbb0869bf
+dpkg-buildpackage: 主机架构 amd64
+ fakeroot debian/rules clean
+dh clean 
+   dh_testdir
+   dh_auto_clean
+   dh_clean
+ dpkg-source -b deepin-desktop-environment-2.1+20150413170547~9fbb0869bf
+dpkg-source: info: using source format `3.0 (native)'
+dpkg-source: info: building deepin-desktop-environment in deepin-desktop-environment_2.1+20150413170547~9fbb0869bf.tar.gz
+dpkg-source: info: building deepin-desktop-environment in deepin-desktop-environment_2.1+20150413170547~9fbb0869bf.dsc
+ debian/rules build
+dh build 
+   dh_testdir
+   debian/rules override_dh_auto_configure
+make[1]: 正在进入目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf'
+dh_auto_configure -- -DCMAKE_BUILD_TYPE=Release
+-- The C compiler identification is GNU 4.8.2
+-- The CXX compiler identification is GNU 4.8.2
+-- Check for working C compiler: /usr/bin/x86_64-linux-gnu-gcc
+-- Check for working C compiler: /usr/bin/x86_64-linux-gnu-gcc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/x86_64-linux-gnu-g++
+-- Check for working CXX compiler: /usr/bin/x86_64-linux-gnu-g++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Found PkgConfig: /usr/bin/pkg-config (found version "0.26") 
+-- checking for module 'deepin-webkit-3.0'
+--   found deepin-webkit-3.0, version 1.8.2
+-- checking for module 'liblightdm-gobject-1'
+--   found liblightdm-gobject-1, version 1.10.0
+make[2]: 正在进入目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/resources/zone/js'
+coffee -cj zone.js ../../common/js/utils.coffee ../../common/js/module.coffee ../../common/js/widget.coffee utils.coffee animation.coffee option.coffee zone.coffee main.coffee
+make[2]:正在离开目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/resources/zone/js'
+make[2]: 正在进入目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/resources/osd/js'
+coffee -cj osd.js ../../common/js/utils.coffee ../../common/js/module.coffee ../../common/js/widget.coffee ../../common/js/animation.coffee ../../common/js/config.coffee utils.coffee listchoose.coffee imglistchoose.coffee bar.coffee option.coffee audio.coffee display.coffee monitor.coffee fcitx.coffee keyboard.coffee main.coffee
+make[2]:正在离开目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/resources/osd/js'
+make[2]: 正在进入目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/resources/lowpower/js'
+coffee -cj lowpower.js ../../common/js/utils.coffee lowpower.coffee
+make[2]:正在离开目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/resources/lowpower/js'
+make[2]: 正在进入目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/resources/guide/js'
+coffee -cj guide.js ../../common/js/config.coffee ../../common/js/utils.coffee ../../common/js/animation.coffee ../../common/js/module.coffee ../../common/js/widget.coffee ../../common/js/selector.coffee ../../common/js/tooltip.coffee ../../common/js/menu.coffee config.coffee utils.coffee base.coffee pointer.coffee rect.coffee menuchoose.coffee buttonnext.coffee contextmenu.coffee guide.coffee welcome.coffee start.coffee dock.coffee launcher.coffee dss.coffee desktop.coffee end.coffee main.coffee
+make[2]:正在离开目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/resources/guide/js'
+-- Found Gettext: /usr/bin/msgmerge (found version "0.18.3") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/obj-x86_64-linux-gnu
+make[1]:正在离开目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf'
+   dh_auto_build
+make[1]: 正在进入目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/obj-x86_64-linux-gnu'
+/usr/bin/cmake -H"/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf" -B"/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/obj-x86_64-linux-gnu" --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/cmake -E cmake_progress_start "/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/obj-x86_64-linux-gnu/CMakeFiles" "/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/obj-x86_64-linux-gnu/CMakeFiles/progress.marks"
+make -f CMakeFiles/Makefile2 all
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/zh_TW/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/el/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/sk_SK/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/ja/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/bg/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/es_VE/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/ar/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/ug/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/nb/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/uk/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/fi/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/fr/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/nl/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/es_MX/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/id/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/es_CL/LC_MESSAGES/DDE.mo
+-- Installing: /home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/debian/tmp/usr/share/locale/am/LC_MESSAGES/DDE.mo
+make[2]:正在离开目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf/obj-x86_64-linux-gnu'
+make[1]:正在离开目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf'
+   dh_install
+   dh_installdocs
+   dh_installchangelogs
+   dh_installgsettings
+   dh_perl
+   dh_link
+   dh_compress
+   dh_fixperms
+   dh_strip
+   dh_makeshlibs
+   debian/rules override_dh_shlibdeps
+make[1]: 正在进入目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf'
+dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info
+make[1]:正在离开目录 `/home/gs/workdir/src/test/dde-workspace/deepin-desktop-environment-2.1+20150413170547~9fbb0869bf'
+   dh_installdeb
+   dh_gencontrol
+dpkg-gencontrol: 警告: File::FcntlLock not available; using flock which is not NFS-safe
+dpkg-gencontrol: 警告: relation > is deprecated: use >> or >=
+dpkg-gencontrol: 警告: File::FcntlLock not available; using flock which is not NFS-safe
+   dh_md5sums
+   dh_builddeb
+dpkg-deb：正在新建软件包 deepin-desktop-environment，包文件为 ../deepin-desktop-environment_2.1+20150413170547~9fbb0869bf_amd64.deb。
+dpkg-deb：正在新建软件包 dde-workspace，包文件为 ../dde-workspace_2.1+20150413170547~9fbb0869bf_amd64.deb。
+ dpkg-genchanges  >../deepin-desktop-environment_2.1+20150413170547~9fbb0869bf_amd64.changes
+dpkg-genchanges: 上传数据中包含完整的原始代码
+ dpkg-source --after-build deepin-desktop-environment-2.1+20150413170547~9fbb0869bf
+dpkg-buildpackage: full upload; Debian-native package (full source is included)
+Now running lintian...
+E: deepin-desktop-environment source: obsolete-relation-form-in-source in dde-workspace depends: dde-daemon (> 0.0.1-20141118131601)
+E: deepin-desktop-environment source: source-is-missing resources/greeter/greeter-theme/three.js
+W: deepin-desktop-environment source: maintainer-script-lacks-debhelper-token debian/dde-workspace.postinst
+W: deepin-desktop-environment source: missing-license-paragraph-in-dep5-copyright gpl-2+ (paragraph at line 5)
+W: deepin-desktop-environment: empty-binary-package
+W: dde-workspace: binary-without-manpage usr/bin/dde-desktop
+W: dde-workspace: binary-without-manpage usr/bin/dde-dock
+W: dde-workspace: binary-without-manpage usr/bin/dde-launcher
+W: dde-workspace: binary-without-manpage usr/bin/dde-lock
+W: dde-workspace: binary-without-manpage usr/bin/dde-lockservice
+W: dde-workspace: binary-without-manpage usr/bin/dde-switchtogreeter
+W: dde-workspace: binary-without-manpage usr/bin/default-terminal
+W: dde-workspace: binary-without-manpage usr/bin/lightdm-deepin-greeter
+W: dde-workspace: script-not-executable usr/share/dde/resources/greeter/scripts/reco
+W: dde-workspace: maintainer-script-ignores-errors postinst
+Finished running lintian.
+Now signing changes and any dsc files...
+ signfile deepin-desktop-environment_2.1+20150413170547~9fbb0869bf.dsc Yueqian Zhang <zhangyueqian@linuxdeepin.com>
+gpg: “Yueqian Zhang <zhangyueqian@linuxdeepin.com>”已跳过：私钥不可用
+gpg: /tmp/debsign.ypoXiy97/deepin-desktop-environment_2.1+20150413170547~9fbb0869bf.dsc: clearsign failed: 私钥不可用
+debsign: gpg error occurred!  Aborting....
