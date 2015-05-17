@@ -131,7 +131,7 @@ Ctrl+k   删除到行尾的命令
       exp1 -a exp2 如果exp1和exp2都为true的话，这个表达式为true
    -o 逻辑或
       exp1 -o exp2 
-9.
+
 
 
 
