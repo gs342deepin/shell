@@ -54,47 +54,12 @@ GNU的make工作时的执行步骤入下：（想来其它的make也是类似）
      prog : prog.o foo.o bar.o
             $(CC) $(CFLAGS) prog.o foo.o bar.o
      在这个示例中，不管全局的$(CFLAGS)的值是什么，在prog目标，以及其所引发的所有规则中（prog.o foo.o bar.o的规则），$(CFLAGS)的值都是“-g”.
-12.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+12. 要比较两个文件，而不写任何消息，请输入：
+      cmp -s prog.c.bak prog.c
+这样，如果文件相同，则给出值 0，如果不同，则给出值 1，或者如果发生错误，则给出值 2。该命令形式通常用在 shell 步骤中。例如：
+      if cmp -s prog.c.bak prog.c
+       then
+      echo No change
+      fi
 
 
