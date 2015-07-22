@@ -56,11 +56,13 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
+#if [ "$color_prompt" = yes ]; then
+#   PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+#else
+#   PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+#fi
+
+export PS1='[gs:\w]$'
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
@@ -112,4 +114,24 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+# Set LS_COLORS environment by Deepin
+if [[ ("$TERM" = *256color || "$TERM" = screen* || "$TERM" = xterm* ) && -f /etc/lscolor-256color ]]; then
+    eval $(dircolors -b /etc/lscolor-256color)
+else
+    eval $(dircolors)
+fi
+export GOROOT=/usr/lib/go
+export GOBIN=/home/guoshuang/workdir/bin
+export PATH=$PATH:$GOBIN:/usr/lib/x86_64-linux-gnu
+export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
 
+DEBEMAIL="packages@linuxdeepin.com"
+DEBFULLNAME="Deepin Packages Builder"
+export DEBEMAIL DEBFULLNAME
+alias dquilt="quilt --quiltrc=${HOME}/.quiltrc-dpkg"
+complete -F _quilt_completion $_quilt_complete_opt dquilt
+if [ -x  /usr/bin/dircolors ];then
+ test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" ||eval "$(dircolors -b)"
+ alias ls="ls --color=auto"
+ alias grep="grep --color=auto"
+ fi

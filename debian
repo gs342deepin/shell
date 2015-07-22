@@ -75,7 +75,7 @@ dpkg-deb  dpkg-architecture
 dpkg-source -x *.dsc  产生目录，dpkg-source -b dir 产生*.dsc 和tar.gz.
 
 
-
+dpkg -I ***.deb  (information)
 
 
 
