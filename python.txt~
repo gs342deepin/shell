@@ -1,0 +1,128 @@
+#!/usr/bin/python
+''' vamei python lesson '''
+
+# Author: date: 07/22
+
+elif i == 0:
+
+当我们新建一个表nl = [1,2,5,3,5]时,实际上是类list的一个对象
+
+可以将功能相似的模块放在同一个文件夹（比如说this_dir）中，构成一个模块包。通过
+import this_dir.module
+引入this_dir文件夹中的module模块。
+该文件夹中必须包含一个__init__.py的文件，提醒Python，该文件夹为一个模块包。__init__.py可以是一个空文件。
+
+避免用下划线作为变量名的开始。一般来讲，变量名_xxx被看作是“私有的”，在模块或类外不可以使用.
+"单下划线" 开始的成员变量叫做保护变量，意思是只有类对象和子类对象自己能访问到这些变量；
+"双下划线" 开始的是私有成员，意思是只有类对象自己能访问，连子类对象也不能访问到这个数据。
+_xxx 不能用'from module import *'导入 
+__xxx__ 系统定义名字 
+__xxx 类中的私有变量名
+
+os.getcwd()函数得到当前工作目录，即当前Python脚本工作的目录路径。
+os.listdir()返回指定目录下的所有文件和目录名。 
+os.path.exists()函数用来检验给出的路径是否真地存在
+
+在Python中，异常也是对象，可对它进行操作。所有异常都是基类Exception的成员。
+try:
+
+   f = open(“file.txt”,”r”)
+except IOError, e:
+   print e
+
+捕获到的IOError错误的详细原因会被放置在对象e中,然后运行该异常的except代码块
+多个except子句截获异常时，如果各个异常类之间具有继承关系，则子类应该写在前面，否则父类将会直接截获子类异常。
+Python有两个内置的函数，locals 和globals，它们提供了基于字典的访问局部和全局变量的方式。
+
+
+Popen   argparse.ArgumentParser    +=   c.startswith('command_')  print('\n'.join(packages))
+globals()['command_' + args.command]   sys.exit(command(args))   os.environ
+
+sys.argv是命令行参数的列表
+len(sys.argv) 是命令行参数个数(也就是argc）
+
+添加模块路径：
+sys.path.append(“mine module path”).
+
+sys.modules —— python的所有模块
+
+python join 和 split方法的使用,join用来连接字符串，split恰好相反，拆分字符串的。
+li=['my','name','is']
+'+'.join(li)
+
+b = 'my..name..is..bob' 
+>>> b.split("..",1) 
+['my', 'name..is..bob'] 
+
+
+os.walk()
+函数声明：walk(top,topdown=True,onerror=None)
+1>参数top表示需要遍历的目录树的路径
+2>参数topdown的默认值是"True",表示首先返回目录树下的文件，然后在遍历目录树的子目录.Topdown的值为"False"时，则表示先遍历目录树的子目录，返回子目录下的文件，最后返回根目录下的文件
+3>参数onerror的默认值是"None",表示忽略文件遍历时产生的错误.如果不为空，则提供一个自定义函数提示错误信息后继续遍历或抛出异常中止遍历
+4>该函数返回一个元组，该元组有3个元素，这3个元素分别表示'每次遍历的路径名，目录列表和文件列表
+os.path.walk()与os.walk()产生的文件名列表并不相同.os.path.walk()产生目录树下的目录路径和文件路径，而os.walk()只产生文件路径
+
+
+print(glob.glob('/home/vamei/*'))找出/home/vamei下的所有文件
+
+split()：拆分字符串。通过指定分隔符对字符串进行切片，并返回分割后的字符串列表（list）
+os.path.split()：按照路径将文件名和路径分割开
+
+u = "www.doiido.com.cn"
+#分割两次，并取序列为1的项
+>>> print u.split('.',2)[1]
+doiido
+-------------------------------
+>>> str="hello boy<[www.doiido.com]>byebye"
+  
+>>> print str.split("[")[1].split("]")[0]
+www.doiido.com
+
+
+fnmatch.fnmatch(name, pattern)方法：测试name是否匹配pattern，返回true/false
+>>> fnmatch.fnmatch('titl.py','*.py')
+True
+
+fnmatch.filter(names, pat)实现列表特殊字符的过滤或筛选,返回符合匹配模式的字符列表,当然names表示的是列表;
+
+
+python中，如何反转一个字符串？
+
+>>> a='123456789'
+>>> b=a[::-1]
+>>> 
+>>> b
+'987654321'
+这个反转方法是使用了分片中，步长是负数的机制。步长如果是负数，那么python会从字符串最后开始往前进行分片。
+
+
+sys.path是一个list.默然情况下python导入文件或者模块的话，他会先在sys.path里找模块的路径。如果没有的话，程序就会报错。
+所以我们一般自己写程序的话。最好把自己的模块路径给加到当前模块扫描的路径里,eg: sys.path.append('你的模块的名称')
+
+
+with open('/home/gs/kanfengml/python/time.py') as f:
+...     print f.readlines()
+with 语句适用于对资源进行访问的场合，确保不管使用过程中是否发生异常都会执行必要的“清理”操作，释放资源，比如文件使用后自动关闭、线程中锁的自动获取和释放等。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
