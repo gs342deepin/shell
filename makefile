@@ -62,4 +62,11 @@ GNU的make工作时的执行步骤入下：（想来其它的make也是类似）
       echo No change
       fi
 
-
+13.make把每一行shell脚本当做一个独立单元，它们在单独的进场中运行。记得加“\”
+make预处理时，所有一$开头的，它都不会放过。想要引用shell自己的变量，应该以$$开头。shell自己的变量是不需要括号的。
+SBUDIR=src example
+all:
+	@for subdir in $(SUBDIR);\
+	do\
+	  echo "Building " $$subdir;\
+        done

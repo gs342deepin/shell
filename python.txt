@@ -109,7 +109,8 @@ with 语句适用于对资源进行访问的场合，确保不管使用过程中
 >>> os.environ['PATH']
 '/home/gs/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games'
 
-
+Python 是否有一种方法能在运行时检测该模块是被导入还是被直接执行呢 __name__ 系统变量就是.
+如果模块是被导入, __name__ 的值为模块名字;如果模块是被直接执行, __name__ 的值为 '__main__'.
 
 
 
