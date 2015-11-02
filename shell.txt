@@ -138,6 +138,10 @@ Ctrl+k   删除到行尾的命令
 
 10.:20,59w /tmp/1 或者仅仅把第20到59行之间的内容存盘成文件/tmp/1 (vim)  
 
+11. readlink -f xxx 绝对路径。 ls -1  --group-directories-first 。
+    $ command -v foo >/dev/null 2>&1 || { echo "I require foo but it's not installed.  Aborting." >&2; exit 1; }
+    Command “command” is POSIX compliant 。
+
 
 
 
