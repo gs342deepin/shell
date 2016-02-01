@@ -141,9 +141,21 @@ Ctrl+k   删除到行尾的命令
 11. readlink -f xxx 绝对路径。 ls -1  --group-directories-first 。
     $ command -v foo >/dev/null 2>&1 || { echo "I require foo but it's not installed.  Aborting." >&2; exit 1; }
     Command “command” is POSIX compliant 。
+12.
+#!/bin/bash
+LIST15="deb http://pools.corp.deepin.com/deepin unstable main contrib non-free  
+deb http://pools.corp.deepin.com/experimental experimental main
+#deb-src http://pools.corp.deepin.com/deepin unstable main contrib non-free
+#deb-src http://pools.corp.deepin.com/experimental experimental main
+#deb http://pools.corp.deepin.com/maintain unstable main"
+echo "${LIST15}"  ### echo ${LIST15} 是一行，echo "${LIST15}" 多行
 
-
-
+13.
+if [ -f /etc/ppp/options ]; then
+    if ! grep -q '^+ipv6' /etc/ppp/options; then
+        echo '+ipv6' | tee -a /etc/ppp/options
+    fi
+fi
 
 
 
