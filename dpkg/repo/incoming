@@ -1,0 +1,5 @@
+Name:my-incoming
+IncomingDir:/var/www/ppa0803/incoming
+Allow: 2015>unstable
+Cleanup: on_deny on_error
+TempDir:/var/www/ppa0803/incoming/tmp

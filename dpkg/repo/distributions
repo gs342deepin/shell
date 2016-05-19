@@ -1,0 +1,11 @@
+Origin: guoshuang
+Label: guos
+Suite:unstable
+Codename:unstable
+Version:15.04
+Architectures:amd64 i386 source
+Components:main contrib non-free  
+Description:guos`s repertory
+SignWith:glinscba@126.com
+Log: dsc.log
+ --type=dsc changelogs.example

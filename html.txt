@@ -1,0 +1,35 @@
+大部分浏览器中，直接输出中文会出现中文乱码的情况，这时候我们就需要在头部将字符声明为 UTF-8
+<head>
+<meta charset="UTF-8">
+<title>页面标题</title>
+</head>
+
+<a href="http://pools.corp.deepin.com/deepin">deepin仓库</a>
+
+<head> 元素包含了所有的头部标签元素。在 <head>元素中你可以插入脚本（scripts）, 样式文件（CSS），及各种meta信息。
+可以添加在头部区域的元素标签为: <title>, <style>, <meta>, <link>, <script>, <noscript>, and <base>
+
+CSS 可以通过以下方式添加到HTML中:
+内联样式- 在HTML元素中使用"style" 属性
+内部样式表 -在HTML文档头部 <head> 区域使用<style> 元素 来包含CSS
+外部引用 - 使用外部 CSS 文件
+最好的方式是通过外部引用CSS文件.
+
+<body style="background-color:yellow;">
+
+
+<ul>
+		<li>deepin</li>
+		<li>maintain</li>
+		<li>universe</li>
+</ul>
+
+<button type="button" onclick="myFunction()">Click Me!</button>
+
+
+<form action="">
+Username: <input type="text" name="user"><br>
+Password: <input type="password" name="password">
+</form>
+
+<input type="radio" name="sex" value="male">Male<br>

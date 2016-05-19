@@ -70,3 +70,12 @@ all:
 	do\
 	  echo "Building " $$subdir;\
         done
+
+14.自动化变量$(@F)
+The file-within-directory part of the file name of 
+the target. If the value of ‘$@’ is dir/foo.o then ‘$(@F)’ is foo.o. 
+‘$(@F)’ is equivalent to ‘$(notdir $@)’.
+
+
+
+

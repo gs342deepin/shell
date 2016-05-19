@@ -1,0 +1,56 @@
+override_dh_shlibdeps:
+       dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info
+
+DPkg::options::=--force-confnew
+
+
+WAKFU = Wakfu_for_linux_x86_update20140729.tar.gz
+LIBC6 = lib
+ifeq ($(DEB_HOST_ARCH),amd64)
+    WAKFU = Wakfu_for_linux_x64_update20140729.tar.gz
+    LIBC6 = lib64
+endif
+
+
+
+DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+
+
+
+
+Name: google-chrome
+Suite: stable
+Architectures: i386 amd64
+Components: main>non-free
+UDebComponents: none
+Method: https://dl.google.com/linux/chrome/deb
+Config: Acquire::Http::Proxy=http://10.0.0.42:7778
+VerifyRelease: blindtrust
+FilterSrcList:upgradeonly google-chrome.list
+
+
+# 
+if [ "$1" = configure ]; then 
+    # If we have setcap is installed, try setting cap_net_raw+ep,
+    # which allows us to install our binaries without the setuid
+    # bit.
+    if command -v setcap > /dev/null; then
+        if setcap cap_net_raw+ep /usr/bin/netselect; then
+            echo "Setcap worked! netselect is not suid!"
+        else
+            echo "Setcap failed on /usr/bin/netselect, falling back to setuid" >&2
+            chmod u+s /usr/bin/netselect
+        fi
+    else
+        echo "Setcap is not installed, falling back to setuid" >&2
+        chmod u+s /usr/bin/netselect
+    fi
+fi
+
+sudo debootstrap  --no-check-gpg --arch=amd64 --include=dbus,wget,openssh-server  trusty trusty/ http://mirrors.corp.deepin.com/ubuntu
+debootstrap raring ./rootfs
+sudo tar -C ./rootfs -c . | docker import - flimm/mybase
+
+
+DEBIAN_FRONTEND=noninteractive apt-get -y install postfix
+yes | apt-get -y --force-yes install package
