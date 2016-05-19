@@ -1,0 +1,32 @@
+#[my-ppa]
+#fqdn = 127.0.0.1
+#method = local
+#incoming = /var/www/ppa/incoming
+#login = *
+#hash = md5
+#allow_unsigned_uploads = 1 
+#
+[deepin-dde]
+fqdn = 10.0.0.127
+method = scp
+hash = md5
+incoming = /var/www/deepin-dde/incoming
+login = *
+allow_unsigned_uploads = 1
+
+[deepin2015]
+fqdn = 10.0.0.127
+method = scp
+hash = md5
+incoming = /var/www/deepin2015/incoming
+login = *
+allow_unsigned_uploads = 1
+
+
+[ppa0803]
+fqdn = 10.0.0.127
+method = scp
+hash = md5
+incoming = /var/www/ppa0803/incoming
+login = *
+allow_unsigned_uploads = 1
