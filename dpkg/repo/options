@@ -1,0 +1,4 @@
+basedir .
+verbose
+ask-passphrase
+morguedir /var/www/ppa0803/old

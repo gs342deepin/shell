@@ -1,0 +1,19 @@
+PREFIX = /usr
+
+all: build
+
+get-source: clean
+	wget https://ci.deepin.io/view/dstore/job/appstore-webapp/lastBuild/artifact/code-dist.tar.gz
+
+build: get-source
+	if [ -d build ];then rm -rf build; fi
+	mkdir -p build
+	tar xvf code-dist.tar.gz -C build
+
+install: 
+	mkdir -p ${DESTDIR}${PREFIX}/share/deepin-appstore/webapp
+	cp -ar build/* ${DESTDIR}${PREFIX}/share/deepin-appstore/webapp
+
+clean:
+	-rm -rf build
+	-rm -f code-dist.tar.gz

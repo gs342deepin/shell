@@ -1,0 +1,199 @@
+#!/bin/bash
+
+#设置sandbox系统权限
+chown root:root /opt/maxthon/maxthon_sandbox
+chmod 4755 /opt/maxthon/maxthon_sandbox
+
+# 注册系统图标资源
+XDG_ICON_RESOURCE="`which xdg-icon-resource 2> /dev/null`"
+if [ ! -x "$XDG_ICON_RESOURCE" ]; then
+  echo "Error: Could not find xdg-icon-resource" >&2
+  exit 1
+fi
+for icon in "/opt/maxthon/product_logo_"*.png; do
+  size="${icon##*/product_logo_}"
+  "$XDG_ICON_RESOURCE" install --size "${size%.png}" "$icon" "maxthon-browser"
+done
+
+# Add an entry to the system menu
+XDG_DESKTOP_MENU="`which xdg-desktop-menu 2> /dev/null`"
+UPDATE_MENUS="`which update-menus 2> /dev/null`"
+if [ ! -x "$XDG_DESKTOP_MENU" ]; then
+  echo "Error: Could not find xdg-desktop-menu" >&2
+  exit 1
+fi
+"$XDG_DESKTOP_MENU" uninstall maxthon-browser.desktop
+"$XDG_DESKTOP_MENU"  install --novendor /opt/maxthon/maxthon.desktop
+
+if [ -x "$UPDATE_MENUS" ]; then
+  update-menus
+fi
+
+
+#设置动态库路径
+DEFAULT_ARCH="amd64"
+
+get_lib_dir() {
+  if [ "$DEFAULT_ARCH" = "i386" ]; then
+    LIBDIR=lib/i386-linux-gnu
+  elif [ "$DEFAULT_ARCH" = "amd64" ]; then
+    LIBDIR=lib/x86_64-linux-gnu
+  else
+    echo Unknown CPU Architecture: "$DEFAULT_ARCH"
+    exit 1
+  fi
+}
+
+#设置udev动态库文件位置
+# Fedora 18 now has libudev.so.1. http://crbug.com/145160
+# Same for Ubuntu 13.04. http://crbug.com/226002
+LIBUDEV_0=libudev.so.0
+LIBUDEV_1=libudev.so.1
+
+add_udev_symlinks() {
+  get_lib_dir
+  if [ -f "/$LIBDIR/$LIBUDEV_0" -o -f "/usr/$LIBDIR/$LIBUDEV_0" -o -f "/lib/$LIBUDEV_0" ]; then
+    return 0
+  fi
+
+  if [ -f "/$LIBDIR/$LIBUDEV_1" ]; then
+    ln -snf "/$LIBDIR/$LIBUDEV_1" "/opt/maxthon/$LIBUDEV_0"
+  elif [ -f "/usr/$LIBDIR/$LIBUDEV_1" ];
+  then
+    ln -snf "/usr/$LIBDIR/$LIBUDEV_1" "/opt/maxthon/$LIBUDEV_0"
+  else
+    echo "$LIBUDEV_1" not found in "$LIBDIR" or "/usr/$LIBDIR".
+    exit 1
+  fi
+}
+
+remove_udev_symlinks() {
+  rm -rf "/opt/maxthon/$LIBUDEV_0"
+}
+
+remove_udev_symlinks
+add_udev_symlinks
+
+mkdir -p /etc/default/maxthon.d/
+if [ ! -f /etc/default/maxthon.d/pn ]; then
+  cp -f /opt/maxthon/conf.d/pn /etc/default/maxthon.d/pn
+fi
+
+
+#process repo
+install_key() {
+  ##also can be add from keyserver
+  ##
+  APT_KEY="`which apt-key 2> /dev/null`"
+  if [ -x "$APT_KEY" ]; then
+    "$APT_KEY" add - >/dev/null 2>&1 <<KEYDATA
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+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
+=K5B/
+-----END PGP PUBLIC KEY BLOCK-----
+KEYDATA
+  fi
+}
+
+REPO_DOMAIN=""
+# sources.list setting for maxthon-browser updates.
+
+get_repo_domain(){
+  if [[ `date -R|grep "0800"` ]] && [[ `echo $LANG | grep "zh_CN"` ]];then
+    REPO_DOMAIN="cn"
+    touch /etc/default/maxthon.d/china
+  else
+    REPO_DOMAIN="com"
+    rm -f /etc/default/maxthon.d/china
+  fi
+}
+get_repo_domain
+APT_GET="`which apt-get 2> /dev/null`"
+APT_CONFIG="`which apt-config 2> /dev/null`"
+REPOCONFIG="deb http://dl.maxthon.$REPO_DOMAIN/linux/deb/ stable maxthon"
+
+
+apt_config_val() {
+  APTVAR="$1"
+  if [ -x "$APT_CONFIG" ]; then
+    "$APT_CONFIG" dump | sed -e "/^$APTVAR /"'!d' -e "s/^$APTVAR \"\(.*\)\".*/\1/"
+  fi
+}
+
+find_apt_sources() {
+  APTDIR=$(apt_config_val Dir)
+  APTETC=$(apt_config_val 'Dir::Etc')
+  APT_SOURCES="$APTDIR$APTETC$(apt_config_val 'Dir::Etc::sourcelist')"
+  APT_SOURCESDIR="$APTDIR$APTETC$(apt_config_val 'Dir::Etc::sourceparts')"
+}
+
+create_sources_lists() {
+  if [ ! "$REPOCONFIG" ]; then
+    return 0
+  fi
+
+  find_apt_sources
+
+  SOURCELIST="$APT_SOURCESDIR/maxthon-browser.list"
+  if [ -d "$APT_SOURCESDIR" ]; then
+    printf  "$REPOCONFIG\n" > "$SOURCELIST"
+    if [ $? -eq 0 ]; then
+      return 0
+    fi
+  fi
+  return 2
+}
+
+install_key
+create_sources_lists
+
+#install report
+echo $MX_REPORT
+/opt/maxthon/report inst &
+exit 0
