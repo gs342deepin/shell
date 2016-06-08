@@ -1,0 +1,35 @@
+#!/bin/bash
+# Because Upstreamer sometimes sync package wrong, so we do sync when upstreamer done
+
+GET_PAGE_CMD="/usr/bin/curl -sfL -retry 3 --retry-delay 3"
+
+urldecode() {
+    local tmpstr="$(cat - | sed -e 's/%/\\x/g')"
+    printf "${tmpstr}\n"
+}
+check_package_content() {
+    local url=$1
+    local file=$2
+    local web_content=$(eval "${GET_PAGE_CMD}" "${url}")
+    echo "${web_content}"  | urldecode | grep -o -P $file | sort -n | tail -1
+}
+
+check_file_exists() {
+    local url=$1
+    local file=$2
+    local file=$(check_package_content ${url} ${file})
+    if [ -z $file ];then
+        return 1
+    else
+        return 0
+    fi
+}
+
+# Upstremer is ustc, and the file is Update-in-Progress, and we will check for 120s util we can do sync
+#while $(check_file_exists http://mirrors.ustc.edu.cn/ubuntu/ Update-in-Progress);do
+#    echo "[Warn @ `date`] Update file exist, Try again in 120 secs..."
+#    sleep 120
+#done
+echo "[Info] Package seems update done, Do sync..."
+~/bin/ftpsync sync:archive:ubuntu
+

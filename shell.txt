@@ -157,7 +157,12 @@ if [ -f /etc/ppp/options ]; then
     fi
 fi
 
+14. ls -la /bin/sh  -> dash 
+    dash: 不支持${$value:0:5} 替代方法:采用expr或cut外部命令代替
+    $string ='hello'
+    $expr substr "$string" 2 3  //  $echo "$string" |cut -c 2-4
 
+15.cat /etc/passwd|awk -F: '/^root/{print $7}' /etc/passwd
 
 
 
